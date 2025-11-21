@@ -1,67 +1,83 @@
-# Cloud Log Monitoring System
+# ☁️ Cloud Log Monitoring System
 
-A complete cloud-based log monitoring and analysis system built with React, Flask, Google Cloud Platform, and Firestore.
+A **cloud-based real-time log monitoring and analysis system** built using **React, Flask, Google Cloud Platform, and Firestore**.
 
-## Team Members
-- Shreya Kumari (net id - fd6317)
-- Richa Sapre (net id - ee9498)
+---
 
-## Architecture
+## 🏗️ Architecture
 
-```
+```mermaid
+flowchart LR
+    A[Client Apps] --> B[Cloud Logging]
+    B --> C[Pub/Sub]
+    C --> D[Cloud Function]
+    D --> E[Firestore]
+    E --> F[Flask REST API]
+    F --> G[React Frontend]
+````
+
+**Flow:**
 Client Apps → Cloud Logging → Pub/Sub → Cloud Function → Firestore
-                                                              ↓
-Frontend (React) ← REST API (Flask) ← ← ← ← ← ← ← ← ← ← ← ← ←
-```
+↓
+Frontend (React) ← REST API (Flask)
 
-## Features
+---
 
-✅ **Real-time Log Collection**: Collect logs from multiple sources
-✅ **Cloud Storage**: Firestore database for scalable log storage
-✅ **Log Processing**: Serverless Cloud Functions for real-time processing
-✅ **Email Alerts**: Automatic email notifications for errors (30-min throttling)
-✅ **REST API**: Flask backend for log management
-✅ **Web Dashboard**: React.js dashboard with real-time updates
-✅ **Visualization**: Charts and graphs for log metrics
-✅ **Filtering**: Filter logs by severity, source, and time range
+## ✨ Features
 
-## Tech Stack
+✅ **Real-time Log Collection** — Collect logs from multiple sources<br/>
+✅ **Cloud Storage** — Firestore for scalable log storage<br/>
+✅ **Log Processing** — Serverless Cloud Functions for real-time analysis<br/>
+✅ **Email Alerts** — Automatic error notifications (30-min throttling)<br/>
+✅ **REST API** — Flask backend for log management<br/>
+✅ **Web Dashboard** — React.js interface with live updates<br/>
+✅ **Visualization** — Charts & graphs for log metrics<br/>
+✅ **Filtering** — Filter by severity, source, and time range<br/>
 
-### Backend
-- Python Flask
-- Google Cloud Functions
-- Google Cloud Pub/Sub
-- Google Firestore
-- Google Cloud Logging
+---
 
-### Frontend
-- React.js
-- Chart.js
-- Axios
+## ⚙️ Tech Stack
 
-### Infrastructure
-- Google Cloud Platform
-- Docker
-- Google Cloud Run
+### 🖥️ Backend
 
-## Project Structure
+* Python Flask
+* Google Cloud Functions
+* Google Cloud Pub/Sub
+* Google Firestore
+* Google Cloud Logging
+
+### 💻 Frontend
+
+* React.js
+* Chart.js
+* Axios
+
+### ☁️ Infrastructure
+
+* Google Cloud Platform
+* Docker
+* Google Cloud Run
+
+---
+
+## 📂 Project Structure
 
 ```
 Cloud-log-mon-system/
 ├── app.py                  # Sample logging application
 ├── .env                    # Environment variables
-├── requirements.txt        # Python dependencies
+├── requirements.txt         # Python dependencies
 ├── backend/
-│   ├── app.py             # Flask REST API
+│   ├── app.py              # Flask REST API
 │   ├── requirements.txt
 │   └── Dockerfile
 ├── cloud-function/
-│   ├── main.py            # Cloud Function for log processing
+│   ├── main.py             # Cloud Function for log processing
 │   └── requirements.txt
 └── frontend/
     ├── src/
-    │   ├── App.js         # Main React component
-    │   ├── App.css        # Styles
+    │   ├── App.js          # Main React component
+    │   ├── App.css         # Styles
     │   └── components/
     │       ├── LogTable.js
     │       ├── StatsChart.js
@@ -69,40 +85,53 @@ Cloud-log-mon-system/
     └── package.json
 ```
 
-## Setup Instructions
+---
 
-### Prerequisites
-- Google Cloud Platform account
-- Node.js and npm
-- Python 3.10+
-- gcloud CLI
+## ⚡ Setup Instructions
 
-### 1. Clone and Setup Environment
+### 🧩 Prerequisites
+
+* Google Cloud Platform account
+* Node.js and npm
+* Python 3.10+
+* `gcloud` CLI
+
+---
+
+### 1️⃣ Clone and Setup Environment
 
 ```bash
+git clone <repo-url>
 cd Cloud-log-mon-system
 cp .env.example .env
-# Edit .env with your credentials
+# Edit .env with your GCP project details and credentials
 ```
 
-### 2. Enable Google Cloud APIs
+---
+
+### 2️⃣ Enable Required Google Cloud APIs
 
 ```bash
 source .env
 gcloud config set project $PROJECT_ID
+
 gcloud services enable logging.googleapis.com
 gcloud services enable pubsub.googleapis.com
 gcloud services enable cloudfunctions.googleapis.com
 gcloud services enable firestore.googleapis.com
 ```
 
-### 3. Create Pub/Sub Topic
+---
+
+### 3️⃣ Create Pub/Sub Topic
 
 ```bash
 gcloud pubsub topics create logs-topic --project=$PROJECT_ID
 ```
 
-### 4. Create Log Sink
+---
+
+### 4️⃣ Create Log Sink
 
 ```bash
 gcloud logging sinks create log-sink \
@@ -111,16 +140,20 @@ gcloud logging sinks create log-sink \
   --project=$PROJECT_ID
 ```
 
-### 5. Grant Permissions
+---
+
+### 5️⃣ Grant Permissions
 
 ```bash
 gcloud pubsub topics add-iam-policy-binding logs-topic \
-  --member='serviceAccount:service-<PROJECT-NUMBER>@gcp-sa-logging.iam.gserviceaccount.com' \
-  --role='roles/pubsub.publisher' \
+  --member="serviceAccount:service-$PROJECT_NUMBER@gcp-sa-logging.iam.gserviceaccount.com" \
+  --role="roles/pubsub.publisher" \
   --project=$PROJECT_ID
 ```
 
-### 6. Deploy Cloud Function
+---
+
+### 6️⃣ Deploy Cloud Function
 
 ```bash
 gcloud functions deploy process-log-function \
@@ -133,7 +166,9 @@ gcloud functions deploy process-log-function \
   --project=$PROJECT_ID
 ```
 
-### 7. Run Backend API (Local)
+---
+
+### 7️⃣ Run Backend API Locally
 
 ```bash
 cd backend
@@ -143,7 +178,9 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### 8. Run Frontend (Local)
+---
+
+### 8️⃣ Run Frontend Locally
 
 ```bash
 cd frontend
@@ -151,22 +188,20 @@ npm install
 npm start
 ```
 
-## API Endpoints
+---
 
-### POST /api/logs
-Create a new log entry
+## 🔌 API Endpoints
 
-### GET /api/logs
-Get logs with optional filters
-- Query params: `severity`, `source`, `limit`, `hours`
+| Method | Endpoint        | Description                         | Query Params                           |
+| ------ | --------------- | ----------------------------------- | -------------------------------------- |
+| `POST` | `/api/logs`     | Create a new log entry              | —                                      |
+| `GET`  | `/api/logs`     | Retrieve logs with optional filters | `severity`, `source`, `limit`, `hours` |
+| `GET`  | `/api/logs/:id` | Get a specific log by ID            | —                                      |
+| `GET`  | `/api/stats`    | Get log statistics and distribution | —                                      |
 
-### GET /api/logs/:id
-Get a specific log by ID
+---
 
-### GET /api/stats
-Get log statistics and distribution
-
-## Usage
+## 🧪 Usage Example
 
 ### Sending Logs from Your Application
 
@@ -180,15 +215,19 @@ client.setup_logging()
 logging.error("This is an error message")
 ```
 
+---
+
 ### Testing the System
 
 ```bash
 python app.py
 ```
 
-This will generate sample logs that flow through the entire pipeline.
+> This will generate sample logs that flow through the entire pipeline.
 
-## Deployment to Google Cloud Run
+---
+
+## 🚀 Deployment to Google Cloud Run
 
 ### Deploy Backend
 
@@ -201,39 +240,45 @@ gcloud run deploy log-api \
   --allow-unauthenticated
 ```
 
+---
+
 ### Deploy Frontend
 
 ```bash
 cd frontend
 npm run build
-# Deploy build/ folder to Cloud Storage or Firebase Hosting
+# Deploy the build/ folder to Cloud Storage or Firebase Hosting
 ```
 
-## Features Implemented
+---
 
-- [x] Log Collection (Cloud Logging)
-- [x] Log Streaming (Pub/Sub)
-- [x] Processing Layer (Cloud Functions)
-- [x] Storage (Firestore)
-- [x] REST API (Flask)
-- [x] Web Dashboard (React)
-- [x] Visualization (Chart.js)
-- [x] Email Alerts
-- [ ] Authentication (Future)
-- [ ] Advanced Analytics (Future)
+## ✅ Features Implemented
 
-## Security
+* [x] Log Collection (Cloud Logging)
+* [x] Log Streaming (Pub/Sub)
+* [x] Processing Layer (Cloud Functions)
+* [x] Storage (Firestore)
+* [x] REST API (Flask)
+* [x] Web Dashboard (React)
+* [x] Visualization (Chart.js)
+* [x] Email Alerts
+* [ ] Authentication *(Future)*
+* [ ] Advanced Analytics *(Future)*
 
-- Environment variables for sensitive data
-- IAM roles and permissions
-- CORS configuration
-- Secure HTTPS endpoints
+---
 
-## License
+## 🔒 Security
 
-MIT License
+* Environment variables for sensitive credentials
+* IAM roles & permissions for access control
+* Configured CORS policies
+* HTTPS endpoints for secure communication
 
-## Contact
+---
 
-- Shreya Kumari - fd6317@nyu.edu
-- Richa Sapre - ee9498@nyu.edu
+## 🧭 Future Enhancements
+
+* User authentication (OAuth 2.0 / Firebase Auth)
+* Advanced analytics & anomaly detection
+* Log retention policies
+* Role-based dashboards
