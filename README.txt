@@ -7,12 +7,15 @@ PROJECT FILES:
 1. app.py - Log generator
 2. function.py - Cloud Function (processes logs, sends alerts)
 3. api.py - REST API (query logs)
-4. requirements.txt - Python dependencies
+4. dashboard.html - Web dashboard with charts
+5. requirements.txt - Python dependencies
 
 ARCHITECTURE:
 app.py → Cloud Logging → Pub/Sub → function.py → Firestore
                                          ↓            ↓
                                     Email Alert    api.py
+                                                      ↓
+                                                 dashboard.html
 
 SETUP:
 1. Create Pub/Sub topic:
@@ -40,6 +43,13 @@ SETUP:
      --region=us-central1 \
      --project=sacred-augury-478923-i9
 
-5. Run locally:
-   python app.py  # Generate logs
-   python api.py  # Start API server
+5. Run the system:
+   # Terminal 1: Generate logs
+   python app.py
+   
+   # Terminal 2: Start API server
+   python api.py
+   
+   # Terminal 3: Open dashboard
+   open dashboard.html
+   # Or open http://localhost:8080 in your browser after opening dashboard.html
