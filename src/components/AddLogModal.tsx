@@ -8,7 +8,7 @@ const severities = ['DEBUG','INFO','WARN','ERROR','FATAL']
 
 export default function AddLogModal({ open, onClose, onAdded }: Props) {
   const [severity, setSeverity] = useState('ERROR')
-  const [message, setMessage] = useState('My name is Neeraj@credflow.in')
+  const [message, setMessage] = useState('Log message')
   const [source, setSource] = useState('payment-service')
   const [timestamp, setTimestamp] = useState(new Date().toISOString())
   const [submitting, setSubmitting] = useState(false)
